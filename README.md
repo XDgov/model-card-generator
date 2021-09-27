@@ -45,8 +45,6 @@ Usage: python ModelCardGenerator.py
 
   Generate a model card.
 
-**Example usage:**
-
 ```
 
 ## Questions in Model Card
