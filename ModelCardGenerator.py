@@ -24,7 +24,7 @@ class ModelCardGenerator(cmd.Cmd):
 			'Model Architecture':["What type of algorithm is used?", "How is the input data formatted?", "How is the output data formatted?"],
 			'Datasets':["Does the training dataset contain information related to individuals or human populations?", "What is the source(s) of the training data?", "How was this data collected or generated?", "What variables are contained in this dataset?", "How many entries are contained in your dataset?", "What percent of data is chosen as a validation set?"],
 			'Performance Metrics':["What metrics are used to rate model performance?", "How are the metrics being reported?", "What is the confidence interval of these metrics?", "What decision threshold was used to compute the metric?", "What factors limit the model's performance?"],
-			'Bias':["Within the workflow of this model, are there concerns related to privacy or surveillance?", "What steps are taken to mitigate privacy and surveillance risks in the model architecture or use cases?", "Within the workflow of this model, is there risk of discrimination against protected classes: age, gender, race, sexuality, color, religion/creed, nationality, disability, veteran status, genetic information, or citizenship?", "What strategies are being used to address possible sources of discrimination in your model architecture or use cases?", "Within the workflow of this model, is there risk of human judgement injecting bias?", "What methods are used to minimize bias from human judgement?", "What biases are potentially found in the dataset from collection methods, historical unfairness, sample size, etc.?", "Are there variables that are influenced by or connected to protected classes? How is this relationship evaluated as a potential source of bias? Example: Gender vs Hair length", "How and when are biases in the dataset addressed in the workflow of the model?", "What testing has been performed to look for bias related to discrimination of protected classes?", "What testing has been performed to maximize fairness in the model’s learned behavior?", "What percentage of development time has been dedicated to bias mitigation?"]}
+			'Bias':[["Within the workflow of this model, are there concerns related to privacy or surveillance?", "What steps are taken to mitigate privacy and surveillance risks in the model architecture or use cases?", "Within the workflow of this model, is there risk of discrimination against protected classes: age, gender, race, sexuality, color, religion/creed, nationality, disability, veteran status, genetic information, or citizenship?", "What strategies are being used to address possible sources of discrimination in your model architecture or use cases?", "Within the workflow of this model, is there risk of human judgement injecting bias?", "What methods are used to minimize bias from human judgement?", "What biases are potentially found in the dataset from collection methods, historical unfairness, sample size, etc.?", "Are there variables that are influenced by or connected to protected classes? How is this relationship evaluated as a potential source of bias? Example: Gender vs Hair length", "How and when are biases in the dataset addressed in the workflow of the model?", "What testing has been performed to look for bias related to discrimination of protected classes?", "What testing has been performed to maximize fairness in the model’s learned behavior?", "What percentage of development time has been dedicated to bias mitigation?"], ["Within the workflow of this model, is there risk of human judgement injecting bias?", "What methods are used to minimize bias from human judgement?", "What biases are potentially found in the training dataset from collection methods, sample size, representation, etc.?", "What evaluation tools have been used to evaluate bias in the training dataset?", "How and when are biases in the dataset addressed in the workflow of the model?", "What testing has been performed to look for bias in the model?", "What percentage of development time has been dedicated to bias mitigation?"]]}
 
 	# basic commands #
 	def do_name(self, arg):
@@ -105,14 +105,22 @@ class ModelCardGenerator(cmd.Cmd):
 
 
 		formFL = True
+		humanFlag =0
 		while formFL == True:
 			form = int(form)
 			if form == 2:
 				included_questions = {}
 
 				for key in self.questionsDict.keys():
+					questions = self.questionsDict[key]
+					while key == "Bias" and humanFlag not in ["1","2"]:
+						humanFlag = input("Does the training dataset contain information related to individuals or human populations?\n" + "1. Yes\n" + "2. No\n")
+						if humanFlag == "1":
+							questions = self.questionsDict[key][0]
+						elif humanFlag == "2":
+							questions = self.questionsDict[key][1]
 					q = "\n" + key + "\n"
-					for question in self.questionsDict[key]:
+					for question in questions:
 						q = q + "     " + question + "\n"
 
 					q = q + "Include section? (Y/N)\n"
@@ -123,7 +131,7 @@ class ModelCardGenerator(cmd.Cmd):
 						y = input(q)
 
 						if y == "Y" or y == "y":
-							included_questions[key] = self.questionsDict[key]
+							included_questions[key] = questions
 							fl = False
 						elif y == "N" or y == "n":
 							fl = False
@@ -142,8 +150,16 @@ class ModelCardGenerator(cmd.Cmd):
 					q = "\n" + key + "\n"
 					print(q)
 					temp = {}
-					for queIndex in range(0,len(self.questionsDict[key])):
-						question = self.questionsDict[key][queIndex]
+					questions = self.questionsDict[key]
+					while key == "Bias" and humanFlag not in ["1","2"]:
+                                                humanFlag = input("Does the training dataset contain information related to individuals or human populations?\n" + "1. Yes\n" + "2. No\n")
+                                                if humanFlag == "1":
+                                                        questions = self.questionsDict[key][0]
+                                                elif humanFlag == "2":
+                                                        questions = self.questionsDict[key][1]
+
+					for queIndex in range(0,len(questions)):
+						question = questions[queIndex]
 						ans = input(question + "\n")
 						while ans.lower() == "help":
 							self.examples(self, key, queIndex)
