@@ -1,10 +1,11 @@
 import cmd, sys
+import textwrap
 import os
 import argparse
 import markdown
 
 class ModelCardGenerator(cmd.Cmd):
-	intro = 'Welcome to the model card generator! \n Model cards and data sheets are a framework to systematically document AI/ML model and training data qualities that can be sources of bias. This information will enable data and model users to pinpoint potential sources of bias. This tool will walk you through the process.\n\n To begin, type "begin". \n (Need help? type help or ? for commands) \n\n\n Required packages: markdown'
+	intro = '\n\nWelcome to the model card generator developed by xD|Census! \n\n A model card is a documentation tool to increase transparency and share\n information with a wider audience about a model’s intent, data, architecture,\n and performance. These brief documents are intended for a technical and\n non-technical audience to gain insight on a machine learning, AI, or\n automation model at any phase in development.\n\n The cards address bias\n in a user’s workflow by guiding them through a series of questions that\n illuminate steps frequently considered but not documented. The user is\n asked to describe topics such as: the use cases of the model, the structure\n of the data, and the evaluation tools used in development.\n\n The model card generator aims to reduce bias in government machine learning\n workflows by exploring a model’s ability to perform across sensitive\n classes and by collecting this information in a readable format to a wider\n audience. Accessible documentation increases accountability and visibility\n of the models making decisions in government.\n\n Once a model card has been created, there are several uses of the document.\n The cards generated in this tool are formatted to be added to a repository\n with the model. When accessed, a new user could reference this document\n for detailed information to guide their own use of the model. A model\n card could be shared with non-technical stakeholders for full transparency\n of performance and expectations.   \n\n To begin, type "begin". \n (Need help? type help or ? for commands) \n\n\n Required packages: markdown'
 	prompt = '[mcg]'
 	file = open("input.cmd", 'w')
 	name = None
