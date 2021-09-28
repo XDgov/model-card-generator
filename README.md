@@ -43,9 +43,7 @@ The script will generate a model card from the user's responses input through th
 ```
 Usage: python ModelCardGenerator.py
 
-  Generate a model card.
-
-**Example usage:**
+  Open shell to generate a model card.
 
 ```
 
