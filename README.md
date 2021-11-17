@@ -3,6 +3,8 @@ Command line tool to generate documentation in the form of a model card
 
 Developed by [xD | U.S. Census Bureau](https://www.xd.gov/)
 
+[Demonstration](https://youtu.be/Qv7reoMSB_Y)
+
 **What is a model card?**
 
 A model card is a documentation tool to increase transparency and share information with a wider audience about a model’s intent, data, architecture, and performance. These brief documents are intended for a technical and non-technical audience to gain insight on a machine learning, AI, or automation model at any phase in development. 
