@@ -7,9 +7,9 @@ Developed by [xD | U.S. Census Bureau](https://www.xd.gov/)
 
 **What is a model card?**
 
-A model card is a documentation tool to increase transparency and share information with a wider audience about a model’s intent, data, architecture, and performance. These brief documents are intended for a technical and non-technical audience to gain insight on a machine learning, AI, or automation model at any phase in development. 
+A model card is a documentation tool to increase transparency and share information with a wider audience about a model’s intent, data, architecture, and performance. These brief documents are intended for a technical and non-technical audience to gain insight on a machine learning, AI, or automation model at any phase in development.
 
-The cards address bias in a user’s workflow by guiding them through a series of questions that illuminate steps frequently considered but not documented. The user is asked to describe topics such as: the use cases of the model, the structure of the data, and the evaluation tools used in development. 
+The cards address bias in a user’s workflow by guiding them through a series of questions that illuminate steps frequently considered but not documented. The user is asked to describe topics such as: the use cases of the model, the structure of the data, and the evaluation tools used in development.
 
 **Why is this tool important?**
 
@@ -24,13 +24,14 @@ Once a model card has been created, there are several uses of the document. The 
 This package requires Python >= 3.2.
 
 Clone the repo and install the package:
-```
+```bash
 git clone git@github.com:XDgov/model-card-generator.git
 ```
 
-Download markdown dependencies.
-```
-pip install markdown
+Move to the directory and download dependencies.
+```bash
+cd model-card-generator
+pip install -r requirements.txt
 ```
 
 ## Features
