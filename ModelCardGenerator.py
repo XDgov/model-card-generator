@@ -44,7 +44,6 @@ class ModelCardGenerator(cmd.Cmd):
 
     def do_owner(self, arg):
         'Internally-built, off-the-shelf, or bespoke aquisition?: owner bespoke'
-
         types = ["Internally built", "Off-the-shelf", "Bespoke"]
         self.owner = types[int(arg) - 1]
 
@@ -63,7 +62,6 @@ class ModelCardGenerator(cmd.Cmd):
 
     def do_input(self, _arg):
         'Read input file: input'
-
         self.readInputTXT()
         try:
             with open('ModelCard.md', 'r') as f:
@@ -213,7 +211,6 @@ class ModelCardGenerator(cmd.Cmd):
         return True
 
     def examples(self, questionsDict, section, questionIndex):
-
         print("*****************************")
         print("\n")
 
@@ -226,22 +223,8 @@ class ModelCardGenerator(cmd.Cmd):
         print(self.exampleDict[section][questionIndex])
         print("*****************************")
 
-    """
-    def populateWORD(self,arg):
-
-        try:
-            from docx import Document
-            document = Document()
-        except:
-            print("Missing prerequisite packages. Saving information to ModelCardInputs.txt")
-
-        populateMD(self,arg)
-
-    """
     def populateTXT(self, arg):
-
         file = open("ModelCardInputs.txt", "w")
-
         names = ""
         agents = ""
         for name in self.name:
@@ -283,9 +266,7 @@ class ModelCardGenerator(cmd.Cmd):
         file.close()
 
     def readInputTXT(self):
-
         if os.path.isfile("ModelCardInputs.txt"):
-
             file = open("ModelCardInputs.txt", "r")
             data = file.read()
             file.close()
@@ -332,95 +313,29 @@ class ModelCardGenerator(cmd.Cmd):
         else:
             print("Unable to open ModelCardInputs.txt")
 
-
-
-
-
-
-
-
-
-
-    """
-    def readInputTXT(self):
-        included_questions = {}
+    def populateMD(self, arg):
         try:
-            file = open("ModelCardInputs.txt","r")
-        except:
-            print("Unable to open ModelCardInputs.txt")
-
-        line = file.readlines()
-
-        self.name = line[0][2:-3].split(",")
-        self.owner = line[1][:-1]
-        self.agency = line[2][2:-3].split(",")
-        self.model = line[3][:-1]
-
-
-        questions = []
-        answers = []
-        section = ""
-
-        included_questions = {}
-
-
-        y = 0
-        for l in range(5,len(line)):
-            if "*" in line[l]:
-                if section == "":
-                    section = line[l-1]
-                else:
-                    i = 0
-                    temp = {}
-                    while i < len(answers):
-                        answer = ""
-                        for j in range(answers[i] + 1, answers[i+1]):
-                            answer += line[j]
-                        temp[line[answers[i]-1]] = answer.strip()
-                        i += 2
-                    included_questions[section] = temp
-                    section = line[l-1]
-                    answers = []
-            elif "+" in line[l]:
-                questions.append(line[l-1])
-                questions.append(line[l-1])
-            elif "#" in line[l]:
-                answers.append(l)
-        i = 0
-        temp = {}
-        while i < len(answers)-1:
-            answer = ""
-            for j in range(answers[i] + 1, answers[i+1]):
-                answer += line[j]
-            temp[line[questions[i]]] = answer
-            i += 2
-        included_questions[section] = temp
-
-        self.populateMD(included_questions)
-    """
-    def populateMD(self,arg):
-        try:
-            f = open('ModelCard.md',"w")
-        except:
+            f = open('ModelCard.md', "w")
+        except Exception:
             print("Unable to create .md document")
         f.write("# " + self.model + " Model Card\n")
-        if self.name != None:
+        if self.name is not None:
             f.write("##Collaborators:\n")
             for name in self.name:
                 f.write('* {}\n'.format(name))
         f.write("\n")
-        if self.agency != None:
+        if self.agency is not None:
             f.write("##Agency:\n")
             for agency in self.agency:
                 f.write('* {}\n'.format(agency))
-        if self.owner != None:
+        if self.owner is not None:
             f.write("##Ownership:\n")
             f.write('* {}\n'.format(self.owner))
         for section in arg.keys():
             f.write("##" + section + "\n")
             for question in arg[section]:
                 f.write("###" + question + "\n")
-                f.write("* "+ arg[section][question] + "\n")
+                f.write("* " + arg[section][question] + "\n")
         f.close()
 
         print("Model card created. Open ModelCard.md in a text editor to populate with your responses to the included questions.")
@@ -428,17 +343,21 @@ class ModelCardGenerator(cmd.Cmd):
     def save_input(self, arg):
         'Save future commands to filename:  RECORD rose.cmd'
         self.file = open(arg, 'w')
+
     def precmd(self, line):
         if self.file and 'playback' not in line:
             print(line, file=self.file)
         return line
-    def do_exit(selfi, inp):
+
+    def do_exit(selfi, _inp):
         print("Good bye!")
         return True
+
     def close(self):
         if self.file:
             self.file.close()
             self.file = None
+
 
 if __name__ == '__main__':
     ModelCardGenerator().cmdloop()
