@@ -11,7 +11,7 @@ class ModelCardGenerator(cmd.Cmd):
     owner = None
     agency = None
     model = None
-    exampleDict = {
+    example_dict = {
                     'Anticipated Use': ["In which agencies will this model be used?", "Who are the intended users of the model?", "What are the intended use cases of the model?"],
                     'Model Information': ["What is the current model version?", "What is the version release date?", "What changes have been made since the last release?", "What is the license for use?"],
                     'Model Architecture': ["What type of algorithm is used?", "How is the input data formatted?", "How is the output data formatted?"],
@@ -20,8 +20,8 @@ class ModelCardGenerator(cmd.Cmd):
                     'Bias': ["Within the workflow of this model, are there concerns related to privacy or surveillance?", "What steps are taken to mitigate privacy and surveillance risks in the model architecture or use cases?", "Within the workflow of this model, is there risk of discrimination against protected classes: age, gender, race, sexuality, color, religion/creed, nationality, disability, veteran status, genetic information, or citizenship?", "What strategies are being used to address possible sources of discrimination in your model architecture or use cases?", "Within the workflow of this model, is there risk of human judgement injecting bias?", "What methods are used to minimize bias from human judgement?", "What biases are potentially found in the dataset from collection methods, historical unfairness, sample size, etc.?", "Are there variables that are influenced by or connected to protected classes? How is this relationship evaluated as a potential source of bias? Example: Gender vs Hair length", "How and when are biases in the dataset addressed in the workflow of the model?", "What testing has been performed to look for bias related to discrimination of protected classes?", "What testing has been performed to maximize fairness in the model’s learned behavior?", "What percentage of development time has been dedicated to bias mitigation?"]
     }
 
-    informationDict = {'Anticipated Use': "ant use info", 'Model Information': "mod info info", 'Model Architecture': "mod arch info", 'Datasets':"dataset info", 'Performance Metrics':"perf metrics info", 'Bias':"bias info"}
-    questionsDict = {
+    information_dict = {'Anticipated Use': "ant use info", 'Model Information': "mod info info", 'Model Architecture': "mod arch info", 'Datasets':"dataset info", 'Performance Metrics':"perf metrics info", 'Bias':"bias info"}
+    questions_dict = {
                     'Anticipated Use': ["In which agencies will this model be used?", "Who are the intended users of the model?", "What are the intended use cases of the model?"],
                     'Model Information': ["What is the current model version?", "What is the version release date?", "What changes have been made since the last release?", "What is the license for use?"],
                     'Model Architecture': ["What type of algorithm is used?", "How is the input data formatted?", "How is the output data formatted?"],
@@ -86,35 +86,35 @@ class ModelCardGenerator(cmd.Cmd):
         a = input("\nEnter affiliated agencies in a + seperated list. Example: xD + Census\n")
         self.do_agency(a)
 
-        aqFlag = True
+        aq_flag = True
         o = input("\nHow was the model aquired:\n1. internally-built - Developed and maintained by employees of the intended user\n2. off-the-shelf - Existing model aquired and modified for new use case\n3. bespoke - Outside agency developed model for this specific use case\n")
-        while aqFlag is True:
+        while aq_flag is True:
 
             if o.isnumeric():
                 if int(o) > 0 and int(o) < 4:
                     self.do_owner(o)
-                    aqFlag = False
+                    aq_flag = False
             else:
                 print("Invalid input")
                 o = input("\nHow was the model aquired:\n1. internally-built - Developed and maintained by employees of the intended user\n2. off-the-shelf - Existing model aquired and modified for new use case\n3. bespoke - Outside agency developed model for this specific use case\n")
 
         form = input("\nIn what format would you like to input further responses:\n1. Command line\n2. Text document\n")
 
-        formFL = True
-        humanFlag = 0
-        while formFL is True:
+        form_FL = True
+        human_flag = 0
+        while form_FL is True:
             form = int(form)
             if form == 2:
                 included_questions = {}
 
-                for key in self.questionsDict.keys():
-                    questions = self.questionsDict[key]
-                    while key == "Bias" and humanFlag not in ["1", "2"]:
-                        humanFlag = input("Does the training dataset contain information related to individuals or human populations?\n" + "1. Yes\n" + "2. No\n")
-                        if humanFlag == "1":
-                            questions = self.questionsDict[key][0]
-                        elif humanFlag == "2":
-                            questions = self.questionsDict[key][1]
+                for key in self.questions_dict.keys():
+                    questions = self.questions_dict[key]
+                    while key == "Bias" and human_flag not in ["1", "2"]:
+                        human_flag = input("Does the training dataset contain information related to individuals or human populations?\n" + "1. Yes\n" + "2. No\n")
+                        if human_flag == "1":
+                            questions = self.questions_dict[key][0]
+                        elif human_flag == "2":
+                            questions = self.questions_dict[key][1]
                     q = "\n" + key + "\n"
                     for question in questions:
                         q = q + "     " + question + "\n"
@@ -136,28 +136,28 @@ class ModelCardGenerator(cmd.Cmd):
 
                 print("Section selection complete. Your file will now be populated.")
                 self.populateTXT(included_questions)
-                formFL = False
+                form_FL = False
 
             elif form == 1:
 
                 included_questions = {}
-                for key in self.questionsDict.keys():
+                for key in self.questions_dict.keys():
                     q = "\n" + key + "\n"
                     print(q)
                     temp = {}
-                    questions = self.questionsDict[key]
-                    while key == "Bias" and humanFlag not in ["1","2"]:
-                                                humanFlag = input("Does the training dataset contain information related to individuals or human populations?\n" + "1. Yes\n" + "2. No\n")
-                                                if humanFlag == "1":
-                                                        questions = self.questionsDict[key][0]
-                                                elif humanFlag == "2":
-                                                        questions = self.questionsDict[key][1]
+                    questions = self.questions_dict[key]
+                    while key == "Bias" and human_flag not in ["1","2"]:
+                                                human_flag = input("Does the training dataset contain information related to individuals or human populations?\n" + "1. Yes\n" + "2. No\n")
+                                                if human_flag == "1":
+                                                        questions = self.questions_dict[key][0]
+                                                elif human_flag == "2":
+                                                        questions = self.questions_dict[key][1]
 
-                    for queIndex in range(0,len(questions)):
-                        question = questions[queIndex]
+                    for que_index in range(0,len(questions)):
+                        question = questions[que_index]
                         ans = input(question + "\n")
                         while ans.lower() == "help":
-                            self.examples(self, key, queIndex)
+                            self.examples(self, key, que_index)
                             ans = input(question + "\n")
 
                         if len(ans) > 1:
@@ -165,24 +165,24 @@ class ModelCardGenerator(cmd.Cmd):
                     if len(temp.keys()) > 0:
                         included_questions[key] = temp
                 print("Questions completed. Your output file will now be populated.")
-                outputForm = input("\nIn what format would you like to output your model card responses:\n1. Markdown (.md)\n2. JSON (.json)\n3. Word (.docx)\n")
-                while outputForm not in ["1","2","3"]:
-                    outputForm = input("\nIn what format would you like to output your model card responses:\n1. Markdown (.md)\n2. JSON (.json)\n3. Word (.docx)\n")
+                output_form = input("\nIn what format would you like to output your model card responses:\n1. Markdown (.md)\n2. JSON (.json)\n3. Word (.docx)\n")
+                while output_form not in ["1","2","3"]:
+                    output_form = input("\nIn what format would you like to output your model card responses:\n1. Markdown (.md)\n2. JSON (.json)\n3. Word (.docx)\n")
 
-                outputFL = True
-                while outputFL is True:
-                    outputForm = int(outputForm)
-                    if outputForm == 1:
+                output_FL = True
+                while output_FL is True:
+                    output_form = int(output_form)
+                    if output_form == 1:
                         self.do_bye(included_questions, 1)
-                        outputFL = False
-                    elif outputForm > 1 and outputForm < 4:
-                        self.do_bye(included_questions, outputForm + 3)
-                        outputFL = False
+                        output_FL = False
+                    elif output_form > 1 and output_form < 4:
+                        self.do_bye(included_questions, output_form + 3)
+                        output_FL = False
                     else:
                         print("Invalid output form selected.\n")
-                        outputForm = input("\nIn what format would you like to output your model card responses:\n1. Markdown (.md)\n2. JSON (.json)\n 3. Word (.docx)\n")
+                        output_form = input("\nIn what format would you like to output your model card responses:\n1. Markdown (.md)\n2. JSON (.json)\n 3. Word (.docx)\n")
 
-                formFL = False
+                form_FL = False
 
             else:
                 print("Invalid form choice")
@@ -215,12 +215,12 @@ class ModelCardGenerator(cmd.Cmd):
         print("\n")
 
         print("More information:\n")
-        print(self.informationDict[section])
+        print(self.information_dict[section])
 
         print("\n")
-        print("Question: " + self.questionsDict[section][questionIndex])
+        print("Question: " + self.questions_dict[section][questionIndex])
         print("Example Answer:\n")
-        print(self.exampleDict[section][questionIndex])
+        print(self.example_dict[section][questionIndex])
         print("*****************************")
 
     def populateTXT(self, arg):
@@ -250,12 +250,12 @@ class ModelCardGenerator(cmd.Cmd):
 
         for section in arg.keys():
             file.write("*" + section + "*\n")
-            file.write(self.informationDict[section])
+            file.write(self.information_dict[section])
 
             for index in range(0, len(arg[section])):
                 file.write("+" + arg[section][index] + "+\n")
                 file.write("Example Answer:\n")
-                file.write(self.exampleDict[section][index])
+                file.write(self.example_dict[section][index])
                 file.write("\nEnter your response between the pound signs (#):")
                 file.write("\n#")
                 file.write("\n")
@@ -280,8 +280,8 @@ class ModelCardGenerator(cmd.Cmd):
             included_questions = {}
             temp = {}
 
-            currentSection = None
-            currentQuestion = None
+            current_section = None
+            current_question = None
 
             sections = data.split("*")
             for s in range(0, len(sections)):
@@ -291,22 +291,22 @@ class ModelCardGenerator(cmd.Cmd):
                         if q % 2 ==0 and q != 0:
                             answers = questions[q].split("#")
                             for a in range(0, len(answers)):
-                                if a % 2 != 0 and a != 0 and currentQuestion is not None:
-                                    temp[currentQuestion] = answers[a]
+                                if a % 2 != 0 and a != 0 and current_question is not None:
+                                    temp[current_question] = answers[a]
                         elif q == 0:
                             continue
                         else:
-                            currentQuestion = questions[q]
+                            current_question = questions[q]
                 else:
                     if s == 0:
                         continue
-                    elif currentSection is None:
-                        included_questions[currentSection] = temp
+                    elif current_section is None:
+                        included_questions[current_section] = temp
                         temp = {}
-                        currentSection = sections[s]
+                        current_section = sections[s]
                     else:
-                        currentSection = sections[s]
-            included_questions[currentSection] = temp
+                        current_section = sections[s]
+            included_questions[current_section] = temp
             self.populateMD(included_questions)
             print("Markdown file created.")
 
