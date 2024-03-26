@@ -4,8 +4,8 @@ import markdown
 
 
 class ModelCardGenerator(cmd.Cmd):
-    intro = " Welcome to the model card generator developed by xD|Census!\n\n This tool can be used to create a model card: a way to share information about a model's intent, data, architecture, and performance.\n\n Enter data when prompted to generate a markdown (*.md) file version of a model card.\n\n To exit the script at any time without saving the file, type \"exit\" and hit enter."
-    prompt = '>'
+    intro = " Welcome to the model card generator developed by xD|Census!\n\n This tool can be used to create a model card: a way to share information about a model's intent, data, architecture, and performance.\n\n To generate a markdown (*.md) file version of a model card, type \"begin\", hit enter, and enter the model\'s information as prompted.\n\n To exit the script at any time without saving the file, type \"exit\" and hit enter."
+    prompt = '> '
     file = None
     name = None
     owner = None
@@ -36,6 +36,60 @@ class ModelCardGenerator(cmd.Cmd):
         'Bias Identification & Mitigation': ['Inclusion of information related to individuals or human populations in the training/testing/validation dataset', 'Degree of risk of human judgement injecting bias within the workflow', 'Methods used to minimize bias from human judgement', 'Potential biases found in the training dataset from collection methods, sample size, representation, etc.', 'Testing/evaluation performed to look for bias in the workflow of the model', 'Degree of model explainability/transparency'],
         'Governance/Compliance': ['Model/dataset compliance with existing laws and regulations. (Including privacy protection regulations)']
     }
+
+    def do_begin(self, arg):
+        for key in self.statements_dict:
+            # first section: initialize file
+            if key == 'Accountability':
+                self.accountability(arg)
+            # last section: save file and exit
+            elif key == 'Governance/Compliance':
+                self.complete_file(arg)
+            else:
+                self.write_section(key)
+
+    def write_section(self, section):
+        self.file.write(f"## {section}\n")
+        for segment in self.statements_dict[section]:
+            input_val = input(f"{segment}\n")
+
+            self.file.write(f"### {segment}\n")
+            self.file.write(f"* {input_val}\n")
+
+    def accountability(self, _arg):
+        for section in self.statements_dict['Accountability']:
+            if section == 'Model name':
+                model_name = input(f"{section}\n")
+                self.init_model_name(model_name)
+            else:
+                input_val = input(f"{section}\n")
+                self.file.write(f"### {section}\n")
+                self.file.write(f"* {input_val}\n")
+
+    def init_model_name(self, name):
+        self.model = name
+        self.init_file()
+
+    def init_file(self):
+        filename = self.model
+
+        self.file = open(f"{filename}.md", 'w')
+        self.file.write(f"# {self.model} Model Card\n")
+        self.file.write("## Accountability\n")
+        self.file.write("### Model Name\n")
+        self.file.write(f"* {self.model}\n")
+
+    def complete_file(self, _arg):
+        section = 'Governance/Compliance'
+        self.file.write(f"## {section}\n")
+
+        for segment in self.statements_dict[section]:
+            input_val = input(f"{segment}\n")
+            self.file.write(f"### {segment}\n")
+            self.file.write(f"* {input_val}\n")
+
+        self.close()
+        exit()
 
     def do_exit(self, _arg):
         'Stop recording, close the tool, and exit'
