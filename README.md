@@ -28,10 +28,9 @@ Clone the repo and install the package:
 git clone git@github.com:XDgov/model-card-generator.git
 ```
 
-Move to the directory and download dependencies.
+Move to the directory.
 ```bash
 cd model-card-generator
-pip install -r requirements.txt
 ```
 
 ## Features
@@ -43,12 +42,14 @@ pip install -r requirements.txt
 This command line tool creates a python shell in which the user is prompted to answer a series of questions regarding their model.
 
 The script will generate a model card from the user's responses input through the command line or through a .txt document. To input answers through a .txt document. Begin the tool and answer the responses as prompted, selecting 'Text Document' as your input preference.
-```
-Usage: python ModelCardGenerator.py
 
-  Open shell to generate a model card.
+To launch the application, type:
 
+```bash
+python ModelCardGenerator.py
 ```
+
+And press "enter".
 
 ## Questions in Model Card
 
