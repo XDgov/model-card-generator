@@ -7,11 +7,11 @@ class ModelCardGenerator(cmd.Cmd):
     file = None
     model_name = None
     statements_dict = {
-        'Accountability': ['Model name', 'Point of contact(s) and affiliations', 'Model acquisition/development method'],
-        'Anticipated Use': ['Division(s) using the model', 'Intended application(s) and stakeholder(s) of the model'],
-        'Model Information & Architecture': ['Current model version and release date', 'Changes made since the last release (if any)', 'License for use', 'Type of model (Classification, Regression, Object Detection etc.)', 'Type(s) of algorithm used'],
-        'Dataset & Performance': ['Source(s) of the training data', 'Data collection/ generation method', 'Number of variables in this dataset', 'Number of entries in your dataset', 'Percent of data chosen as a training, testing and validation set', 'Metrics used to rate model performance', 'Factors that limit the model\'s performance. (Examples: Limited dataset, number of nulls/NAs) (if any)'],
-        'Bias Identification & Mitigation': ['Inclusion of information related to individuals or human populations in the training/testing/validation dataset', 'Degree of risk of human judgement injecting bias within the workflow', 'Methods used to minimize bias from human judgement', 'Potential biases found in the training dataset from collection methods, sample size, representation, etc.', 'Testing/evaluation performed to look for bias in the workflow of the model', 'Degree of model explainability/transparency'],
+        'Accountability': ['Model name', 'Point of contact(s)', 'Agencies/Affiliations' 'Model acquisition/development method'],
+        'Anticipated Use': ['Division(s) using the model', 'Intended application(s)', 'Intended stakeholder(s)'],
+        'Model Information & Architecture': ['Current model version', 'Version release date', 'Changes made since the last release (if any)', 'License for use', 'Type of model (Classification, Regression, Object Detection, etc.)', 'Type of algorithm(s) used'],
+        'Dataset & Performance': ['Source(s) of the training data', 'Data collection/ generation method', 'Number of variables in this dataset', 'Number of entries in your dataset', 'Percent of data chosen as a training, testing and validation sets', 'Metrics used to rate model performance', 'Factors that limit the model\'s performance. (Examples: Limited dataset, number of nulls/NAs) (if any)'],
+        'Bias Identification & Mitigation': ['Inclusion of information related to individuals or human populations in the training/testing/validation datasets - Yes/No, if "yes" include a description of demographic features', 'Methods used to minimize bias from human judgement', 'Potential biases found in the training dataset from collection methods, sample size, representation, etc.', 'Testing/evaluation performed to look for bias in the workflow of the model', 'Degree of model explainability/transparency'],
         'Governance/Compliance': ['Model/dataset compliance with existing laws and regulations. (Including privacy protection regulations)']
     }
 
