@@ -9,11 +9,11 @@ Developed by [xD | U.S. Census Bureau](https://www.xd.gov/)
 
 A model card is a documentation tool to increase transparency and share information with a wider audience about a model’s intent, data, architecture, and performance. These brief documents are intended for a technical and non-technical audience to gain insight on a machine learning, AI, or automation model at any phase in development.
 
-The cards address bias in a user’s workflow by guiding them through a series of questions that illuminate steps frequently considered but not documented. The user is asked to describe topics such as: the use cases of the model, the structure of the data, and the evaluation tools used in development.
+The cards address data inaccuracies in a user’s workflow by guiding them through a series of questions that illuminate steps frequently considered but not documented. The user is asked to describe topics such as: the use cases of the model, the structure of the data, and the evaluation tools used in development.
 
 **Why is this tool important?**
 
-The model card generator aims to reduce bias in government machine learning workflows by exploring a model’s ability to perform across sensitive classes and by collecting this information in a readable format to a wider audience. Accessible documentation increases accountability and visibility of the models making decisions in government.
+The model card generator aims to reduce data inaccuracies in government machine learning workflows by exploring a model’s ability to perform across sensitive classes and by collecting this information in a readable format to a wider audience. Accessible documentation increases accountability and visibility of the models making decisions in government.
 
 **How are model cards used?**
 
